@@ -23,7 +23,6 @@ define shell_script::permission(
         '7' => '/usr/bin/sh',
         default => '/bin/sh',
       }
-    }
     default: {
       $shell_path = '/bin/sh'
     }
@@ -45,3 +44,4 @@ define shell_script::permission(
     path        => $script_path,
   }
 }
+
