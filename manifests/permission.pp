@@ -29,12 +29,11 @@ define shell_script::permission(
     }
   }
   # create script
-  file { $name:
+  file { "${file_path}/${name}.sh":
     ensure       => $ensure,
     owner        => $::shell_script::owner,
     group        => $::shell_script::group,
     mode         => $::shell_script::mode,
-    path         => "${file_path}/${name}.sh",
     content      => template("${module_name}/permission.erb"),
     notify       => Exec["script ${name}.sh"],
     validate_cmd => "${shell_path} -n %",
