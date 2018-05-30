@@ -7,11 +7,11 @@
 # @example
 #   include shell_script
 class shell_script(
-  Hash $permission_scripts,
-  String $path = '/root',
-  String $owner = 'root',
-  String $group = 'root',
-  String $mode  = '0500'
+  Optional[Hash] $permission_scripts = undef,
+  String $path                       = '/root',
+  String $owner                      = 'root',
+  String $group                      = 'root',
+  String $mode                       = '0500'
 ) {
   # create resource scripts
   if $permission_scripts {

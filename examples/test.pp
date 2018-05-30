@@ -19,7 +19,9 @@
 # class { '::shell_script':
 #   permission_scripts => $permission_scripts,
 # }
-
+# include class
+include ::shell_script
+# create resource
 ::shell_script::permission { 'foo':
   ensure => present,
   owner  => 'root',
