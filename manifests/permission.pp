@@ -35,10 +35,10 @@ define shell_script::permission(
     group        => $::shell_script::group,
     mode         => $::shell_script::mode,
     content      => template("${module_name}/permission.erb"),
-    notify       => Exec["script ${name}.sh"],
+    notify       => Exec["${file_path}/${name}.sh"],
     validate_cmd => "${shell_path} -n %",
   }
-  exec { "script ${name}.sh":
+  exec { "${file_path}/${name}.sh":
     command     => "sh /root/${name}.sh",
     refreshonly => true,
     path        => $script_path,
