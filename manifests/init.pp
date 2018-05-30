@@ -15,6 +15,6 @@ class shell_script(
 ) {
   # create resource scripts
   if $permission_scripts {
-    create_resource(shell_script::permission, $permission_scripts)
+    create_resources(shell_script::permission, $permission_scripts)
   }
 }

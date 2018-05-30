@@ -19,7 +19,7 @@ define shell_script::permission(
 
   case $facts['os']['name'] {
     'CentOS': {
-      $shell_path = $facts['operatingsystemmajrelease'] ?
+      $shell_path = $facts['operatingsystemmajrelease'] ? {
         '7' => '/usr/bin/sh',
         default => '/bin/sh',
       }
@@ -36,7 +36,7 @@ define shell_script::permission(
     mode         => $::shell_script::use_mode,
     path         => "${file_path}/${name}.sh",
     content      => template("${module_name}/permission.erb"),
-    notify       => Exec["script ${name}.sh"]
+    notify       => Exec["script ${name}.sh"],
     validate_cmd => "${shell_path} -n %",
   }
   exec { "script ${name}.sh":
