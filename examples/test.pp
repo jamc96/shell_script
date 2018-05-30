@@ -25,5 +25,6 @@
   owner  => 'root',
   group  => 'root',
   mode   => '775',
+  path   => '/tmp/test',
 }
 

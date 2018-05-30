@@ -15,7 +15,7 @@ define shell_script::permission(
 ) {
   # global variables
   $script_path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
-  $file_path  = $::shell_script::use_path
+  $file_path  = $::shell_script::path
 
   case $facts['os']['name'] {
     'CentOS': {
@@ -31,9 +31,9 @@ define shell_script::permission(
   # create script
   file { $name:
     ensure       => $ensure,
-    owner        => $::shell_script::use_owner,
-    group        => $::shell_script::use_group,
-    mode         => $::shell_script::use_mode,
+    owner        => $::shell_script::owner,
+    group        => $::shell_script::group,
+    mode         => $::shell_script::mode,
     path         => "${file_path}/${name}.sh",
     content      => template("${module_name}/permission.erb"),
     notify       => Exec["script ${name}.sh"],
