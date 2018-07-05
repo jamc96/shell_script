@@ -7,7 +7,7 @@
 # @example
 #   shell_script::permission { 'namevar': }
 define shell_script::permission(
-  String $path                     = undef,
+  Optional[String] $path           = undef,
   Enum['present','absent'] $ensure = 'present',
   String $owner                    = 'root',
   String $group                    = 'root',
@@ -15,6 +15,9 @@ define shell_script::permission(
   String $conf_dir                 = '/root/permission',
 ) {
   # global variables
+  unless $path {
+    fail("Evaluation Error: Error while evaluating a Resource Statement, Defined Type[shell_script::permission]: parameter 'path' expects a match for string value")
+  }
   case $facts['os']['name'] {
     'CentOS': {
       $shell_path = $facts['operatingsystemmajrelease'] ? {

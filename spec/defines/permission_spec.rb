@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe 'shell_script::permission' do
+  context "with no parameters" do 
+    let(:title) { 'foo' }
+
+    it { is_expected.to compile.and_raise_error(%r{Defined Type\[shell_script::permission\]: parameter 'path' expects a match for string value}) }
+  end
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }
