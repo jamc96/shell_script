@@ -27,7 +27,7 @@ define shell_script::permission(
     }
   }
   # create main directory
-  file { $conf_dir: 
+  file { $conf_dir:
     ensure => 'directory',
   }
   # create script

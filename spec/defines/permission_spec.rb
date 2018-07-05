@@ -5,7 +5,7 @@ describe 'shell_script::permission' do
     context "on #{os}" do
       let(:facts) { os_facts }
       let(:title) { 'foo' }
-      let(:params) { { 'path' => '/bar'} }
+      let(:params) { { 'path' => '/bar' } }
 
       # validate manifest syntax
       it { is_expected.to compile }
@@ -13,32 +13,26 @@ describe 'shell_script::permission' do
       # main directory
       it { is_expected.to contain_file('/root/permission').with_ensure('directory') }
       # validate file script
-      it { is_expected.to contain_file('/root/permission/foo.sh') \
-        .with( ensure: 'present', owner: 'root', group: 'root', mode: '0500',)
+      it {
+        is_expected.to contain_file('/root/permission/foo.sh') \
+          .with(ensure: 'present', owner: 'root', group: 'root', mode: '0500') \
+          .with_content(%r{^DIRECTORY[=]?[/]\w+}) \
+          .with_content(%r{^OWNER[=]?[a-z]+$}) \
+          .with_content(%r{^GROUP[=]?[a-z]+$}) \
+          .with_content(%r{^MODE[=]?\d{3}$}) \
+          .that_requires('File[/root/permission]')
       }
-      it { is_expected.to contain_file('/root/permission/foo.sh') \
-        .with_content(%r{^DIRECTORY[=]?[/]\w+})
-      }
-      it { is_expected.to contain_file('/root/permission/foo.sh') \
-        .with_content(%r{^OWNER[=]?[a-z]+$})
-      }
-      it { is_expected.to contain_file('/root/permission/foo.sh') \
-        .with_content(%r{^GROUP[=]?[a-z]+$})
-      }
-      it { is_expected.to contain_file('/root/permission/foo.sh') \
-        .with_content(%r{^MODE[=]?\d{3}$})
-      }
-      it { is_expected.to contain_file('/root/permission/foo.sh').that_requires('File[/root/permission]') }
-
-      case os_facts[:operatingsystem]
-      when 'CentOS'
-        if os_facts[:operatingsystemmajrelease] == '7'
-          it { is_expected.to contain_file('/root/permission/foo.sh').with(validate_cmd: '/usr/bin/sh -n %') }
-        end
+      if os_facts[:operatingsystem] == 'CentOS' && os_facts[:operatingsystemmajrelease] == '7'
+        it { is_expected.to contain_file('/root/permission/foo.sh').with(validate_cmd: '/usr/bin/sh -n %') }
       else
         it { is_expected.to contain_file('/root/permission/foo.sh').with(validate_cmd: '/bin/sh -n %') }
       end
-
+      # validate execution
+      it {
+        is_expected.to contain_exec('/root/permission/foo.sh') \
+          .with(command: 'sh /root/foo.sh', refreshonly: true, path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin') \
+          .that_subscribes_to('File[/root/permission/foo.sh]')
+      }
     end
   end
 end
