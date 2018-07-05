@@ -16,7 +16,7 @@ define shell_script::permission(
 ) {
   # global variables
   unless $path {
-    fail("Evaluation Error: Error while evaluating a Resource Statement, Defined Type[shell_script::permission]: parameter 'path' expects a match for string value")
+    fail("Defined Type[shell_script::permission]: parameter 'path' expects a match for string value")
   }
   case $facts['os']['name'] {
     'CentOS': {
