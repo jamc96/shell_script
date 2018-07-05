@@ -7,16 +7,14 @@
 # @example
 #   shell_script::permission { 'namevar': }
 define shell_script::permission(
-  $ensure,
-  $owner,
-  $group,
-  $mode,
-  $path,
+  String $path                     = undef,
+  Enum['present','absent'] $ensure = 'present',
+  String $owner                    = 'root',
+  String $group                    = 'root',
+  String $mode                     = '644',
+  String $conf_dir                 = '/root/permission',
 ) {
   # global variables
-  $script_path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
-  $file_path  = $::shell_script::path
-
   case $facts['os']['name'] {
     'CentOS': {
       $shell_path = $facts['operatingsystemmajrelease'] ? {
@@ -28,19 +26,24 @@ define shell_script::permission(
       $shell_path = '/bin/sh'
     }
   }
-  # create script
-  file { "${file_path}/${name}.sh":
-    ensure       => $ensure,
-    owner        => $::shell_script::owner,
-    group        => $::shell_script::group,
-    mode         => $::shell_script::mode,
-    content      => template("${module_name}/permission.erb"),
-    notify       => Exec["${file_path}/${name}.sh"],
-    validate_cmd => "${shell_path} -n %",
+  # create main directory
+  file { $conf_dir: 
+    ensure => 'directory',
   }
-  exec { "${file_path}/${name}.sh":
+  # create script
+  file { "${conf_dir}/${name}.sh":
+    ensure       => $ensure,
+    owner        => 'root',
+    group        => 'root',
+    mode         => '0500',
+    content      => template("${module_name}/permission.erb"),
+    validate_cmd => "${shell_path} -n %",
+    require      => File[$conf_dir],
+  }
+  exec { "${conf_dir}/${name}.sh":
     command     => "sh /root/${name}.sh",
     refreshonly => true,
-    path        => $script_path,
+    path        => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+    subscribe   => File["${conf_dir}/${name}.sh"],
   }
 }

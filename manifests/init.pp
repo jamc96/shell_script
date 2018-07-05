@@ -8,10 +8,6 @@
 #   include shell_script
 class shell_script(
   Optional[Hash] $permission_scripts = undef,
-  String $path                       = '/root',
-  String $owner                      = 'root',
-  String $group                      = 'root',
-  String $mode                       = '0500'
 ) {
   # create resource scripts
   if $permission_scripts {
