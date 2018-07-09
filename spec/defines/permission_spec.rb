@@ -35,7 +35,7 @@ describe 'shell_script::permission' do
       # validate execution
       it {
         is_expected.to contain_exec('/root/permission/foo.sh') \
-          .with(command: 'sh /root/foo.sh', refreshonly: true, path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin') \
+          .with(command: 'sh /root/permission/foo.sh', refreshonly: true, path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin') \
           .that_subscribes_to('File[/root/permission/foo.sh]')
       }
     end

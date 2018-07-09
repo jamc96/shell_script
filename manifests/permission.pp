@@ -44,7 +44,7 @@ define shell_script::permission(
     require      => File[$conf_dir],
   }
   exec { "${conf_dir}/${name}.sh":
-    command     => "sh /root/${name}.sh",
+    command     => "sh ${conf_dir}/${name}.sh",
     refreshonly => true,
     path        => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     subscribe   => File["${conf_dir}/${name}.sh"],
