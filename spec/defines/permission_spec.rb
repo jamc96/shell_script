@@ -10,7 +10,7 @@ describe 'shell_script::permission' do
     context "on #{os}" do
       let(:facts) { os_facts }
       let(:title) { 'foo' }
-      let(:params) { { 'path' => '/bar' } }
+      let(:params) { { 'path' => '/bar', 'owner' => 'tor', 'group' => 'tor', 'mode' => '700'} }
 
       # validate manifest syntax
       it { is_expected.to compile }

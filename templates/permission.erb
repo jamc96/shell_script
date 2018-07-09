@@ -8,10 +8,14 @@ GROUP=<%= @group %>
 MODE=<%= @mode %>
 
 # validate if user and group exist
-if [[ $(getent group $GROUP) &&  $(getent passwd $OWNER) ]]; then
-    # validate if directory exist
-    if [ -d "$DIRECTORY" ]; then
-        chmod -R $MODE $DIRECTORY
-        chown -R $OWNER:$GROUP $DIRECTORY
+if [[ -n "$OWNER" && -n "$GROUP" ]]; then 
+    if [[ $(getent group $GROUP) &&  $(getent passwd $OWNER) ]]; then
+        # validate if directory exist
+        if [ -d "$DIRECTORY" ]; then
+            chown -R $OWNER:$GROUP $DIRECTORY    
+        fi
     fi
+fi
+if [[ -n "$MODE" ]]; then 
+    chmod -R $MODE $DIRECTORY
 fi

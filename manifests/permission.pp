@@ -9,9 +9,9 @@
 define shell_script::permission(
   Optional[String] $path           = undef,
   Enum['present','absent'] $ensure = 'present',
-  String $owner                    = 'root',
-  String $group                    = 'root',
-  String $mode                     = '644',
+  Optional[String] $owner          = undef,
+  Optional[String] $group          = undef,
+  Optional[String] $mode           = undef,
   String $conf_dir                 = '/root/permission',
 ) {
   # global variables
