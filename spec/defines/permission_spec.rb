@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'shell_script::permission' do
-  context "with no parameters" do 
+  context 'with no parameters' do
     let(:title) { 'foo' }
 
     it { is_expected.to compile.and_raise_error(%r{Defined Type\[shell_script::permission\]: parameter 'path' expects a match for string value}) }
@@ -10,7 +10,7 @@ describe 'shell_script::permission' do
     context "on #{os}" do
       let(:facts) { os_facts }
       let(:title) { 'foo' }
-      let(:params) { { 'path' => ['/foo','/bar'], 'owner' => 'tor', 'group' => 'tor' } }
+      let(:params) { { 'path' => ['/foo', '/bar'], 'owner' => 'tor', 'group' => 'tor' } }
 
       # validate manifest syntax
       it { is_expected.to compile }
