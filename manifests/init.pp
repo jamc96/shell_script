@@ -8,7 +8,7 @@
 #   include shell_script
 class shell_script(
   Optional[Hash] $permission_scripts = undef,
-  Optional[Hash] $mode_scripts       = undef,
+  Optional[Hash] $mode_scripts       = undef
   String $conf_dir                   = '/root/permission',
 ) {
   # create main directory
