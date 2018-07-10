@@ -9,7 +9,7 @@
 class shell_script(
   Optional[Hash] $permission_scripts = undef,
   Optional[Hash] $mode_scripts       = undef,
-  String $conf_dir                   = '/root/permission',
+  String $conf_dir                   = '/root/scripts',
 ) {
   # create main directory
   file { $conf_dir:

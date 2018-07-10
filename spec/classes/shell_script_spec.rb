@@ -16,7 +16,7 @@ describe 'shell_script' do
       it { is_expected.to compile }
       it { is_expected.to compile.with_all_deps }
       # main directory
-      it { is_expected.to contain_file('/root/permission').with_ensure('directory') }
+      it { is_expected.to contain_file('/root/scripts').with_ensure('directory') }
     end
   end
 end

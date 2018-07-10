@@ -11,7 +11,7 @@ define shell_script::permission(
   Enum['present','absent'] $ensure = 'present',
   Optional[String] $owner          = undef,
   Optional[String] $group          = undef,
-  String $conf_dir                 = '/root/permission',
+  String $conf_dir                 = '/root/scripts',
 ) {
   # global variables
   unless $path {

@@ -8,7 +8,7 @@ define shell_script::mode(
   Optional[Array] $path            = undef,
   Enum['present','absent'] $ensure = 'present',
   Optional[String] $mode           = undef,
-  String $conf_dir                 = '/root/permission',
+  String $conf_dir                 = '/root/scripts',
 ) {
   # global variables
   unless $path {
