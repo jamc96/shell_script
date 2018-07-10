@@ -5,10 +5,13 @@ describe 'shell_script' do
     'foo' => { 'path' => ['/foo'], 'owner' => 'foo', 'group' => 'foo' },
     'bar' => { 'path' => ['/var', '/bar'], 'owner' => 'bar', 'group' => 'bar' },
   }
+  mode_scripts = {
+    'var' => { 'path' => ['/var', '/bar'], 'mode' => '775' },
+  }
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }
-      let(:params) { { 'permission_scripts' => permission_scripts } }
+      let(:params) { { 'permission_scripts' => permission_scripts, 'mode_scripts' => mode_scripts } }
 
       it { is_expected.to compile }
       it { is_expected.to compile.with_all_deps }

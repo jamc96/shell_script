@@ -21,6 +21,6 @@ class shell_script(
   }
   # create mode scripts 
   if $mode_scripts {
-    create_rescources(shell_script::mode, $mode_scripts)
+    create_resources(shell_script::mode, $mode_scripts)
   }
 }
