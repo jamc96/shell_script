@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe 'shell_script::permission' do
+describe 'shell_script::mode' do
   context "with no parameters" do 
     let(:title) { 'foo' }
 
-    it { is_expected.to compile.and_raise_error(%r{Defined Type\[shell_script::permission\]: parameter 'path' expects a match for string value}) }
+    it { is_expected.to compile.and_raise_error(%r{Defined Type\[shell_script::mode\]: parameter 'path' expects a match for string value}) }
   end
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }
       let(:title) { 'foo' }
-      let(:params) { { 'path' => ['/foo','/bar'], 'owner' => 'tor', 'group' => 'tor' } }
+      let(:params) { { 'path' => ['/foo','/bar'], 'mode' => '700'} }
 
       # validate manifest syntax
       it { is_expected.to compile }
@@ -19,8 +19,7 @@ describe 'shell_script::permission' do
       it {
         is_expected.to contain_file('/root/permission/foo.sh') \
           .with(ensure: 'present', owner: 'root', group: 'root', mode: '0500') \
-          .with_content(%r{^OWNER[=]?[a-z]+$}) \
-          .with_content(%r{^GROUP[=]?[a-z]+$})
+          .with_content(%r{^MODE[=]?\d{3}$})
       }
       if os_facts[:operatingsystem] == 'CentOS' && os_facts[:operatingsystemmajrelease] == '7'
         it { is_expected.to contain_file('/root/permission/foo.sh').with(validate_cmd: '/usr/bin/sh -n %') }

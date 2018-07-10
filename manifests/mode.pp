@@ -1,21 +1,18 @@
-# shell_script::permission
-#
 # A description of what this defined type does
 #
 # @summary A short summary of the purpose of this defined type.
 #
 # @example
-#   shell_script::permission { 'namevar': }
-define shell_script::permission(
+#   shell_script::mode { 'namevar': }
+define shell_script::mode(
   Optional[Array] $path            = undef,
   Enum['present','absent'] $ensure = 'present',
-  Optional[String] $owner          = undef,
-  Optional[String] $group          = undef,
+  Optional[String] $mode           = undef,
   String $conf_dir                 = '/root/permission',
 ) {
   # global variables
   unless $path {
-    fail("Defined Type[shell_script::permission]: parameter 'path' expects a match for string value")
+    fail("Defined Type[shell_script::mode]: parameter 'path' expects a match for string value")
   }
   case $facts['os']['name'] {
     'CentOS': {
@@ -34,7 +31,7 @@ define shell_script::permission(
     owner        => 'root',
     group        => 'root',
     mode         => '0500',
-    content      => template("${module_name}/permission.erb"),
+    content      => template("${module_name}/mode.erb"),
     validate_cmd => "${shell_path} -n %",
   }
   exec { "${conf_dir}/${name}.sh":

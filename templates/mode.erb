@@ -1,0 +1,12 @@
+#!/bin/bash
+# File managed by puppet
+
+# default variables
+MODE=<%= @mode %>
+<% unless @path.empty? -%>
+if [[ -n "$MODE" ]]; then
+    <% @path.each do |value| -%>
+    chmod -R $MODE <%= value %>
+    <% end -%>
+fi
+<% end -%>

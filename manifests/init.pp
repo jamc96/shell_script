@@ -8,6 +8,7 @@
 #   include shell_script
 class shell_script(
   Optional[Hash] $permission_scripts = undef,
+  Optional[Hash] $mode_scripts       = undef,
   String $conf_dir                   = '/root/permission',
 ) {
   # create main directory
@@ -17,5 +18,9 @@ class shell_script(
   # create resource scripts
   if $permission_scripts {
     create_resources(shell_script::permission, $permission_scripts)
+  }
+  # create mode scripts 
+  if $mode_scripts {
+    create_rescources(shell_script::mode, $mode_scripts)
   }
 }

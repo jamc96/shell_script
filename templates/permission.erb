@@ -4,7 +4,6 @@
 # default variables
 OWNER=<%= @owner %>
 GROUP=<%= @group %>
-MODE=<%= @mode %>
 <% unless @path.empty? -%>
 # validate user and group
 if [[ -n "$OWNER" && -n "$GROUP" ]]; then 
@@ -13,10 +12,5 @@ if [[ -n "$OWNER" && -n "$GROUP" ]]; then
         chown -R $OWNER:$GROUP <%= value %>
     <% end -%>
     fi
-fi
-if [[ -n "$MODE" ]]; then
-    <% @path.each do |value| -%>
-    chmod -R $MODE <%= value %>
-    <% end -%>
 fi
 <% end -%>

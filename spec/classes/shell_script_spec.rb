@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'shell_script' do
   permission_scripts = {
     'foo' => { 'path' => ['/foo'], 'owner' => 'foo', 'group' => 'foo'},
-    'bar' => { 'path' => ['/var','/bar'], 'owner' => 'bar', 'group' => 'bar', 'mode' => '500'}
+    'bar' => { 'path' => ['/var','/bar'], 'owner' => 'bar', 'group' => 'bar'}
   }
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
