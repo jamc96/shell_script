@@ -29,10 +29,6 @@ define shell_script::permission(
       $shell_path = '/bin/sh'
     }
   }
-  # create main directory
-  file { $conf_dir:
-    ensure => 'directory',
-  }
   # create script
   file { "${conf_dir}/${name}.sh":
     ensure       => $ensure,
@@ -41,7 +37,6 @@ define shell_script::permission(
     mode         => '0500',
     content      => template("${module_name}/permission.erb"),
     validate_cmd => "${shell_path} -n %",
-    require      => File[$conf_dir],
   }
   exec { "${conf_dir}/${name}.sh":
     command     => "sh ${conf_dir}/${name}.sh",

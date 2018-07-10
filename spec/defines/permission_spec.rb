@@ -15,8 +15,6 @@ describe 'shell_script::permission' do
       # validate manifest syntax
       it { is_expected.to compile }
       it { is_expected.to compile.with_all_deps }
-      # main directory
-      it { is_expected.to contain_file('/root/permission').with_ensure('directory') }
       # validate file script
       it {
         is_expected.to contain_file('/root/permission/foo.sh') \
@@ -24,8 +22,7 @@ describe 'shell_script::permission' do
           .with_content(%r{^DIRECTORY[=]?[/]\w+}) \
           .with_content(%r{^OWNER[=]?[a-z]+$}) \
           .with_content(%r{^GROUP[=]?[a-z]+$}) \
-          .with_content(%r{^MODE[=]?\d{3}$}) \
-          .that_requires('File[/root/permission]')
+          .with_content(%r{^MODE[=]?\d{3}$})
       }
       if os_facts[:operatingsystem] == 'CentOS' && os_facts[:operatingsystemmajrelease] == '7'
         it { is_expected.to contain_file('/root/permission/foo.sh').with(validate_cmd: '/usr/bin/sh -n %') }
