@@ -2,20 +2,21 @@
 # File managed by puppet
 
 # default variables
-DIRECTORY=<%= @path %>
 OWNER=<%= @owner %>
 GROUP=<%= @group %>
 MODE=<%= @mode %>
-
-# validate if user and group exist
+<% unless @path.empty? -%>
+# validate user and group
 if [[ -n "$OWNER" && -n "$GROUP" ]]; then 
     if [[ $(getent group $GROUP) &&  $(getent passwd $OWNER) ]]; then
-        # validate if directory exist
-        if [ -d "$DIRECTORY" ]; then
-            chown -R $OWNER:$GROUP $DIRECTORY    
-        fi
+    <% @path.each do |value| -%>
+        chown -R $OWNER:$GROUP <%= value %>
+    <% end -%>
     fi
 fi
-if [[ -n "$MODE" ]]; then 
-    chmod -R $MODE $DIRECTORY
+if [[ -n "$MODE" ]]; then
+    <% @path.each do |value| -%>
+    chmod -R $MODE <%= value %>
+    <% end -%>
 fi
+<% end -%>

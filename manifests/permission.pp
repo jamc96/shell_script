@@ -7,7 +7,7 @@
 # @example
 #   shell_script::permission { 'namevar': }
 define shell_script::permission(
-  Optional[String] $path           = undef,
+  Optional[Array] $path            = undef,
   Enum['present','absent'] $ensure = 'present',
   Optional[String] $owner          = undef,
   Optional[String] $group          = undef,

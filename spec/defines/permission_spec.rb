@@ -10,7 +10,7 @@ describe 'shell_script::permission' do
     context "on #{os}" do
       let(:facts) { os_facts }
       let(:title) { 'foo' }
-      let(:params) { { 'path' => '/bar', 'owner' => 'tor', 'group' => 'tor', 'mode' => '700'} }
+      let(:params) { { 'path' => ['/foo','/bar'], 'owner' => 'tor', 'group' => 'tor', 'mode' => '700'} }
 
       # validate manifest syntax
       it { is_expected.to compile }
@@ -19,7 +19,6 @@ describe 'shell_script::permission' do
       it {
         is_expected.to contain_file('/root/permission/foo.sh') \
           .with(ensure: 'present', owner: 'root', group: 'root', mode: '0500') \
-          .with_content(%r{^DIRECTORY[=]?[/]\w+}) \
           .with_content(%r{^OWNER[=]?[a-z]+$}) \
           .with_content(%r{^GROUP[=]?[a-z]+$}) \
           .with_content(%r{^MODE[=]?\d{3}$})
